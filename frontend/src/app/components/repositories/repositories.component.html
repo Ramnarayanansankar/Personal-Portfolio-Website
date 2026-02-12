@@ -1,0 +1,44 @@
+<section>
+  <div class="section-header">
+    <h2>GitHub Repositories</h2>
+    <a
+      class="tag"
+      href="https://github.com/Ramnarayanansankar?tab=repositories"
+      target="_blank"
+      rel="noreferrer"
+      >View on GitHub</a
+    >
+  </div>
+
+  @if (loading) {
+    <div class="card loading">Loading repositories…</div>
+  } @else if (error) {
+    <div class="card error">{{ error }}</div>
+  } @else {
+    <div class="repo-grid">
+      @for (repo of repos; track repo.html_url) {
+        <a
+          [href]="repo.html_url"
+          target="_blank"
+          rel="noreferrer"
+          class="card repo-card"
+        >
+          <h3 class="repo-name">{{ formatRepoName(repo.name) }}</h3>
+          @if (repo.description) {
+            <p class="repo-desc">{{ repo.description }}</p>
+          }
+          <div class="repo-meta">
+            @if (repo.language) {
+              <span class="chip">{{ repo.language }}</span>
+            }
+            <span class="stat" title="Stars">
+              ★ {{ repo.stargazers_count }}
+            </span>
+            <span class="stat" title="Forks">⎇ {{ repo.forks_count }}</span>
+            <span class="repo-date">Updated {{ formatDate(repo.updated_at) }}</span>
+          </div>
+        </a>
+      }
+    </div>
+  }
+</section>
